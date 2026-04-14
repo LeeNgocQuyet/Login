@@ -29,7 +29,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.example.login.ui.LoginScreen
+
 import com.example.login.ui.theme.LoginTheme
 
 class MainActivity : ComponentActivity() {
@@ -38,54 +39,18 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LoginTheme {
-                Login()
+                LoginScreen()
             }
         }
     }
 }
 
-@Composable
-fun Login() {
-    var username by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ){
-        Image(painter = painterResource(R.drawable.plankavatar),
-            "plank avatar",
-            modifier = Modifier.padding(16.dp))
-        OutlinedTextField(
-            value = username,
-            onValueChange = { username = it },
-            label = { Text("Tài khoản") },
-            leadingIcon = {
-                Icon(Icons.Default.Person, contentDescription = null)
-            }
-        )
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text("Mật khẩu") },
-            leadingIcon = {
-                Icon(Icons.Default.Lock, contentDescription = null)
-            }
-        )
-        Button(onClick = {
-        },
-            modifier = Modifier.padding(8.dp)
-        ) {
-            Text(text = "Đăng nhập")
-        }
-    }
-}
 
 @Preview(showBackground = true)
 @Composable
 fun LoginPreview() {
     LoginTheme {
-        Login()
+        LoginScreen()
     }
 }

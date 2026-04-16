@@ -10,7 +10,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -22,19 +21,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Checkbox
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 
-@Preview
 @Composable
-fun LoginScreen() {
-    var username by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
+fun LoginScreen(
+    navController: NavController,
+    vm: AuthViewModel = viewModel()) {
 
     Column(
     modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -45,16 +40,16 @@ fun LoginScreen() {
             "plank avatar",
             modifier = Modifier.padding(16.dp))
         OutlinedTextField(
-            value = username,
-            onValueChange = { username = it },
+            value = vm.uiState.username,
+            onValueChange = { vm.onUsernameChange(it) },
             label = { Text("Tài khoản") },
             leadingIcon = {
                 Icon(Icons.Default.Person, contentDescription = null)
             }
         )
         OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
+            value = vm.uiState.password,
+            onValueChange = { vm.onPasswordChange(it) },
             label = { Text("Mật khẩu") },
             leadingIcon = {
                 Icon(Icons.Default.Lock, contentDescription = null)
@@ -62,12 +57,14 @@ fun LoginScreen() {
         )
         Row(){
             Checkbox(
-                checked = true,
-                onCheckedChange = {  }
+                checked = vm.uiState.isChecked,
+                onCheckedChange = { newValue ->
+                    vm.onCheckedChange()
+                }
             )
             Text("Ghi nhớ đăng nhập")
 
-            Button(onClick = {}) {
+            Button(onClick = { navController.navigate("forgot")  }){
                 Text(text = "Quên mật khẩu")
             }
 
@@ -79,6 +76,7 @@ fun LoginScreen() {
             Text(text = "Đăng nhập")
         }
         Button(onClick = {
+            navController.navigate("register")
         },
             modifier = Modifier.padding(8.dp)
         ) {

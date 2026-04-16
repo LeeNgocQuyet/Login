@@ -14,10 +14,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 
-@Preview
 @Composable
-fun NewPasswordScreen() {
+fun NewPasswordScreen(navController: NavController,
+                      vm: AuthViewModel = viewModel()) {
     var password by rememberSaveable { mutableStateOf("") }
     var verificatePassword by rememberSaveable { mutableStateOf("") }
     Column() {
@@ -38,11 +40,15 @@ fun NewPasswordScreen() {
                 Icon(Icons.Default.Email, contentDescription = null)
             })
 
-        Button(onClick ={} ) {
+        Button(onClick ={
+
+        } ) {
             Text(text = "Xác nhận")
         }
 
-        Button(onClick ={} ) {
+        Button(onClick ={
+             navController.navigate("login")
+        } ) {
             Text(text = "Quay lại trang Đăng nhập")
         }
 

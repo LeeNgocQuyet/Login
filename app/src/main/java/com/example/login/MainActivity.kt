@@ -29,7 +29,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.login.ui.ForgotPasswordScreen
 import com.example.login.ui.LoginScreen
+import com.example.login.ui.NewPasswordScreen
+import com.example.login.ui.RegisterScreen
 
 import com.example.login.ui.theme.LoginTheme
 
@@ -39,7 +45,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LoginTheme {
-                LoginScreen()
+                LoginApp()
             }
         }
     }
@@ -51,6 +57,32 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun LoginPreview() {
     LoginTheme {
-        LoginScreen()
+        LoginApp()
+    }
+}
+@Composable
+fun LoginApp() {
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        startDestination = "login"
+    ) {
+
+        composable("login") {
+            LoginScreen(navController)
+        }
+
+        composable("register") {
+            RegisterScreen(navController)
+        }
+
+        composable("forgot") {
+            ForgotPasswordScreen(navController)
+        }
+
+        composable("new_password") {
+            NewPasswordScreen(navController)
+        }
     }
 }

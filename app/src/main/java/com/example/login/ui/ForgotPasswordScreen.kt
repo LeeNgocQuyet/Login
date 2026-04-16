@@ -30,10 +30,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 
-@Preview
 @Composable
-fun ForgotPasswordScreen() {
+fun ForgotPasswordScreen(
+    navController: NavController,
+    vm: AuthViewModel = viewModel()
+) {
     var email by rememberSaveable { mutableStateOf("") }
     var verificateCode by rememberSaveable { mutableStateOf("") }
     Column() {
@@ -51,16 +55,18 @@ fun ForgotPasswordScreen() {
         OutlinedTextField(
             value = verificateCode,
             onValueChange = { verificateCode = it },
-            label = { Text("Tài khoản") },
+            label = { Text("Mã xác nhận") },
             leadingIcon = {
                 Icon(Icons.Default.Email, contentDescription = null)
             })
 
-        Button(onClick ={} ) {
+        Button(onClick ={
+            navController.navigate("new_password")
+        } ) {
             Text(text = "Xác nhận")
         }
 
-        Button(onClick ={} ) {
+        Button(onClick ={ navController.navigate("login")} ) {
             Text(text = "Quay lại trang Đăng nhập")
         }
 

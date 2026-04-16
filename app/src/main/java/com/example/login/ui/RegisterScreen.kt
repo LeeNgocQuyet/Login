@@ -29,43 +29,43 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 
-@Preview
 @Composable
-fun RegisterScreen() {
-    var username by rememberSaveable { mutableStateOf("") }
-    var password by rememberSaveable { mutableStateOf("") }
-    var email by rememberSaveable { mutableStateOf("") }
-    var confirmPassword by rememberSaveable { mutableStateOf("") }
+fun RegisterScreen(
+    navController: NavController,
+    vm: AuthViewModel = viewModel()) {
+    var uiState = vm.uiState
 
     Column() {
         OutlinedTextField(
-            value = username,
-            onValueChange = { username = it },
+            value = vm.uiState.username,
+            onValueChange = { vm.onUsernameChange(it)},
             label = { Text("Tài khoản") },
             leadingIcon = {
                 Icon(Icons.Default.Person, contentDescription = null)
             }
         )
         OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
+            value = vm.uiState.email,
+            onValueChange = { vm.onUsernameChange(it) },
             label = { Text("Email") },
             leadingIcon = {
                 Icon(Icons.Default.Email, contentDescription = null)
             }
         )
         OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
+            value = vm.uiState.password,
+            onValueChange = { vm.onPasswordChange(it) },
             label = { Text("Mật khẩu") },
             leadingIcon = {
                 Icon(Icons.Default.Lock, contentDescription = null)
             }
         )
         OutlinedTextField(
-            value = confirmPassword,
-            onValueChange = { confirmPassword = it },
+            value = vm.uiState.password,
+            onValueChange = { vm.onPasswordChange(it)  },
             label = { Text("Mật khẩu") },
             leadingIcon = {
                 Icon(Icons.Default.Lock, contentDescription = null)
@@ -74,7 +74,7 @@ fun RegisterScreen() {
         Button(onClick = {}) {
             Text(text = "Đăng ký")
         }
-        Button(onClick ={} ) {
+        Button(onClick ={ navController.navigate("login")} ) {
             Text(text = "Quay lại trang Đăng nhập")
         }
     }
